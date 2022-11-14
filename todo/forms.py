@@ -23,5 +23,5 @@ class TaskForm(forms.ModelForm):
 
 class TagForm(forms.ModelForm):
     class Meta:
-        name = Tag
+        model = Tag
         fields = "__all__"

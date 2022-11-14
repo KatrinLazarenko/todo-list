@@ -7,30 +7,31 @@ from todo.models import Task, Tag
 
 
 class TagListView(generic.ListView):
-    tag = Tag
+    model = Tag
     queryset = Tag.objects.all()
     # context_object_name = "tag_list"
     # template_name = "todo/tag_list.html"
 
 
 class TagCreateView(generic.CreateView):
-    tag = Tag
+    model = Tag
     # fields = "__all__"
     queryset = Tag.objects.all()
-    success_url = reverse_lazy("todo:task-list")
+    success_url = reverse_lazy("todo:tag-list")
     form_class = TagForm
 
 
 class TagUpdateView(generic.UpdateView):
-    tag = Tag
+    model = Tag
     fields = "__all__"
+    queryset = Tag.objects.all()
     success_url = reverse_lazy("todo:tag-list")
 
 
 class TagDeleteView(generic.DeleteView):
-    tag = Tag
+    model = Tag
     fields = "__all__"
-    # queryset = Tag.objects.all()
+    queryset = Tag.objects.all()
     success_url = reverse_lazy("todo:tag-list")
 
 
@@ -52,7 +53,7 @@ class TaskUpdateView(generic.UpdateView):
 
 
 class TaskDeleteView(generic.DeleteView):
-    tag = Tag
+    model = Task
     queryset = Task.objects.all()
     success_url = reverse_lazy("todo:task-list")
 
