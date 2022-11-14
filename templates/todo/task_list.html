@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>
+    TODO list
+    <a class="btn btn-info pull-right" style="float: right" href="{% url 'todo:task-create' %}">Add task</a>
+  </h1>
+  <br>
+
+  {% if task_list %}
+    <ul style="list-style: none; padding-left: 0;">
+      {% for task in task_list %}
+        <li>
+          <strong>{{ task.content }}</strong>
+
+          {% if task.status %}
+            <span style="color: green"> Done </span>
+          {% else %}
+            <span style="color: red"> Undone </span>
+          {% endif %}
+
+          {% if task.status%}
+
+            <form method="POST" action="{% url 'todo:task-change' pk=task.pk %}">
+              {% csrf_token %}
+              <button type="submit"
+                  title="Complete"
+                  style="float: right"
+                  class="btn btn-secondary pull-right">
+                Undo
+              </button>
+            </form>
+
+          {% else %}
+
+            <form method="POST" action="{% url 'todo:task-change' pk=task.pk %}">
+              {% csrf_token %}
+              <button
+                  type="submit"
+                  title="Complete"
+                  style="float: right"
+                  class="btn btn-success pull-right">
+                Complete
+              </button>
+            </form>
+
+          {% endif %}
+          Created: {{ task.date }}
+          {% if task.deadline %}
+            <span style="color: brown"> Deadline: {{ task.deadline }} </span>
+          {% endif %}
+          <br>
+            <span class="text-muted">Tags:
+              {% for tag in task.tags.all %}
+                {% if tag %} {{ tag.name }} {% else %} No tags added :( {% endif %}
+              {% endfor %}
+            </span>
+          <a  href="{% url 'todo:task-update' pk=task.id %}">
+            Update
+          </a>
+          <a href="{% url 'todo:task-delete' pk=task.id %}">
+            Delete
+          </a>
+          <hr>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>There are no cars in task</p>
+  {% endif %}
+{% endblock %}
