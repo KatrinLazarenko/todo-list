@@ -8,7 +8,7 @@ from todo.models import Task, Tag
 
 class TagListView(generic.ListView):
     tag = Tag
-    # queryset = Tag.objects.all()
+    queryset = Tag.objects.all()
     # context_object_name = "tag_list"
     # template_name = "todo/tag_list.html"
 
@@ -16,7 +16,7 @@ class TagListView(generic.ListView):
 class TagCreateView(generic.CreateView):
     tag = Tag
     # fields = "__all__"
-    # queryset = Tag.objects.all()
+    queryset = Tag.objects.all()
     success_url = reverse_lazy("todo:task-list")
     form_class = TagForm
 
